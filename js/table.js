@@ -251,6 +251,19 @@ SQL.Table.prototype.toXML = function() {
 	return xml;
 }
 
+SQL.Table.prototype.toRails = function() {
+	var tableRails = "";
+	tableRails += "rails generate scaffold " + this.getTitle().replace(/"/g, "");
+	for (var i=0;i<this.rows.length;i++) {
+		tableRails += this.rows[i].toRails();
+	}
+	/* do we need to address keys here?  I think they are better associated directly from the columns for now */
+	tableRails += "\n";
+	return tableRails;
+}
+
+
+
 SQL.Table.prototype.fromXML = function(node) {
 	var name = node.getAttribute("name");
 	this.setTitle(name);

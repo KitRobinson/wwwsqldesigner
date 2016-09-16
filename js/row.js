@@ -355,6 +355,28 @@ SQL.Row.prototype.toXML = function() {
 	return xml;
 }
 
+SQL.Row.prototype.toRails = function() {
+	var rowRails = " ";
+	var dt = this.getDataType().getAttribute("sql");
+	if (dt == "TINYINT" || dt == "bit" || dt == "SMALLINT" || dt == "YEAR" || dt == "MEDIUMINT" || dt == "INT"){
+		dt = "integer";
+	}
+	if (dt == "DECIMAL" || dt == "DOUBLE"){
+		dt = "float";
+	}
+	if (dt == "CHAR" || dt == "VARCHAR" || dt == "VARBINARY"){
+		dt = "string";
+	}
+	if (dt == "MEDIUMTEXT" || dt == "BLOB" || dt == "ENUM" || dt == "SET"){
+		dt = "text";
+	} 
+	rowRails += this.getTitle().replace(/"/g, "") + ":" + dt.toLowerCase();
+	if (this.getTitle() == "id"){
+		return "";
+	}
+	return rowRails;
+}
+
 SQL.Row.prototype.fromXML = function(node) {
 	var name = node.getAttribute("name");
 	
