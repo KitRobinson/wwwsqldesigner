@@ -129,7 +129,7 @@ SQL.RowManager.prototype.foreigndisconnect = function(e) { /* remove connector *
 	var rels = this.selected.relations;
 	for (var i=rels.length-1;i>=0;i--) {
 		var r = rels[i];
-		if (r.row2 == this.selected) { this.owner.removeRelation(r); }
+		if (r.row2 == this.selected || r.row1 == this.selected) { this.owner.removeRelation(r); }
 	}
 	this.redraw();
 }
@@ -182,7 +182,7 @@ SQL.RowManager.prototype.redraw = function() {
 		var rels = this.selected.relations;
 		for (var i=0;i<rels.length;i++) {
 			var r = rels[i];
-			if (r.row2 == this.selected) { this.dom.foreigndisconnect.disabled = false; }
+			if (r.row2 == this.selected || r.row1 == this.selected) { this.dom.foreigndisconnect.disabled = false; }
 		}
 
 	} else {
