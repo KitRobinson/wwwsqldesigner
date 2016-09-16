@@ -175,8 +175,8 @@ SQL.RowManager.prototype.redraw = function() {
 		this.dom.downrow.disabled = (rows[rows.length-1] == this.selected);
 		this.dom.removerow.disabled = false;
 		this.dom.editrow.disabled = false;
-		// this.dom.foreigncreate.disabled = !(this.selected.isUnique());
-		// this.dom.foreignconnect.disabled = !(this.selected.isUnique());
+		this.dom.foreigncreate.disabled = this.owner.tables.length < 2;
+		this.dom.foreignconnect.disabled = this.owner.tables.length < 2;
 
 		this.dom.foreigndisconnect.disabled = true;
 		var rels = this.selected.relations;
@@ -190,8 +190,8 @@ SQL.RowManager.prototype.redraw = function() {
 		this.dom.downrow.disabled = true;
 		this.dom.removerow.disabled = true;
 		this.dom.editrow.disabled = true;
-		// this.dom.foreigncreate.disabled = true;
-		// this.dom.foreignconnect.disabled = true;
+		this.dom.foreigncreate.disabled = this.owner.tables.length < 2;
+		this.dom.foreignconnect.disabled = this.owner.tables.length < 2;
 		this.dom.foreigndisconnect.disabled = true;
 	}
 }
