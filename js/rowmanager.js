@@ -57,6 +57,15 @@ SQL.RowManager.prototype.tableClick = function(e) { /* create relation after cli
 }
 
 SQL.RowManager.prototype.rowClick = function(e) { /* draw relation after clicking target row */
+	if (this.creating_no_data) {
+		if (!e.target.isUnique()) { return; }
+
+		this.selected = e.target;
+		this.selected.select();
+		this.creating = true
+		this.creating_no_data = false;
+	}
+
 	if (this.connecting_no_data) {
 		this.selected = e.target;
 		this.selected.select();
@@ -80,11 +89,20 @@ SQL.RowManager.prototype.rowClick = function(e) { /* draw relation after clickin
 
 SQL.RowManager.prototype.foreigncreate = function(e) { /* start creating fk */
 	this.endConnect();
-	if (this.creating) {
-		this.endCreate();
+	if (this.selected) {
+		if (this.creating) {
+			this.endCreate();
+		} else {
+			this.creating = true;
+			this.dom.foreigncreate.value = "["+_("foreignpending")+"]";
+		}
 	} else {
-		this.creating = true;
-		this.dom.foreigncreate.value = "["+_("foreignpending")+"]";
+		if (this.creating) {
+			this.endCreate();
+		} else {
+			this.creating_no_data = true;
+			this.dom.foreigncreate.value = "["+_("foreignconnectpending")+"]";
+		}
 	}
 }
 
