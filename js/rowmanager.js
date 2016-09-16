@@ -39,6 +39,12 @@ SQL.RowManager.prototype.select = function(row) { /* activate a row */
 }
 
 SQL.RowManager.prototype.tableClick = function(e) { /* create relation after clicking target table */
+	if (this.owner.tableManager.adding) {
+		this.owner.tableManager.adding = false;
+		OZ.DOM.removeClass("area","adding");
+		this.owner.tableManager.dom.addtable.value = this.owner.tableManager.oldvalue;
+	}
+
 	if (!this.creating) { return; }
 	
 	var r1 = this.selected;
@@ -56,6 +62,29 @@ SQL.RowManager.prototype.tableClick = function(e) { /* create relation after cli
 }
 
 SQL.RowManager.prototype.rowClick = function(e) { /* draw relation after clicking target row */
+	if (this.owner.tableManager.adding) {
+		this.owner.tableManager.adding = false;
+		OZ.DOM.removeClass("area","adding");
+		this.owner.tableManager.dom.addtable.value = this.owner.tableManager.oldvalue;
+	}
+
+	if (this.creating_no_data) {
+		if (!e.target.isUnique()) { return; }
+
+		this.selected = e.target;
+		this.selected.select();
+		this.creating = true
+		this.creating_no_data = false;
+	}
+
+	if (this.connecting_no_data) {
+		this.selected = e.target;
+		this.selected.select();
+		this.connecting = true;
+		this.connecting_no_data = false;
+		return;
+	}
+
 	if (!this.connecting) { return; }
 	
 	var r1 = this.selected;
