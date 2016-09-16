@@ -355,6 +355,13 @@ SQL.Row.prototype.toXML = function() {
 	return xml;
 }
 
+SQL.Row.prototype.toRails = function() {
+	var rowRails = " ";
+	var dataTypeRails = this.getDataType().getAttribute("sql");
+	rowRails += this.getTitle().replace(/"/g, "") + ":" + dataTypeRails;
+	return rowRails;
+}
+
 SQL.Row.prototype.fromXML = function(node) {
 	var name = node.getAttribute("name");
 	
