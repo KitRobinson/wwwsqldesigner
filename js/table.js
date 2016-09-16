@@ -251,6 +251,14 @@ SQL.Table.prototype.toXML = function() {
 	return xml;
 }
 
+SQL.Table.prototype.toRails = function() {
+	var tableRails = "";
+	tableRails += "rails generate scaffold " + this.getTitle().replace(/"/g, "");
+	
+}
+
+
+
 SQL.Table.prototype.fromXML = function(node) {
 	var name = node.getAttribute("name");
 	this.setTitle(name);

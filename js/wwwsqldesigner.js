@@ -272,6 +272,33 @@ SQL.Designer.prototype.toXML = function() {
 	return xml;
 }
 
+SQL.Designer.prototype.toRails = function() {
+	var rails = ' <!-- Thanks for generating your schema with us! -->\n'
+	rails += '<!-- rails commands created by WWW SQL Designer, https://github.com/ondras/wwwsqldesigner/ -->\n'
+	rails += '<!-- this is intended to be used with a fresh rails app - updating migrations comes later!'
+	rails += '<--COPY AND PASTE THE BELOW INTO THE TERMINAL-->\n';
+
+	/* stringify data types */
+	/* what does this serializer do?  is it necessary? */
+
+	if (window.XMLSerializer) {
+		var s = new XMLSerializer();
+		rails += s.serializeToString(window.DATATYPES);
+	} else if (window.DATATYPES.xml) {
+		rails += window.DATATYPES.xml;
+	} else {
+		alert(_("errorxml")+': '+e.message);
+	}
+
+	/* here is where the actual work is done */
+	for (var i=0;i<this.tables.length;i++) {
+		rails += this.tables[i].toRails();
+	}
+	rails += "\n";
+	return rails;
+
+}
+
 SQL.Designer.prototype.fromXML = function(node) {
 	this.clearTables();
 	var types = node.getElementsByTagName("datatypes");
