@@ -51,7 +51,7 @@ SQL.IO = function(owner) {
 	OZ.Event.add(this.dom.dropboxlist, "click", this.dropboxlist.bind(this));
 	OZ.Event.add(this.dom.clientsql, "click", this.clientsql.bind(this));
 	//////////////////////////////////////////////////////////////////////
-	OZ.Event.add(this.dom.railssave, "click", this.clientsql.bind(this));
+	OZ.Event.add(this.dom.railssave, "click", this.generateRails.bind(this));
 	//////////////////////////////////////////////////////////////////////
 	OZ.Event.add(this.dom.quicksave, "click", this.quicksave.bind(this));
 	OZ.Event.add(this.dom.serversave, "click", this.serversave.bind(this));
@@ -371,6 +371,11 @@ SQL.IO.prototype.dropboxlist = function() {
 
 
 /* ------------------------- Dropbox end ------------------------ */
+
+SQL.IO.prototype.generateRails = function() {
+	var railsText = this.owner.toRails();
+	this.dom.ta.value = railsText.trim();
+}
 
 SQL.IO.prototype.clientsql = function() {
 	var bp = this.owner.getOption("staticpath");

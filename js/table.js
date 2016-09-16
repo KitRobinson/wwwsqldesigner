@@ -258,6 +258,7 @@ SQL.Table.prototype.toRails = function() {
 		tableRails += this.rows[i].toRails();
 	}
 	/* do we need to address keys here?  I think they are better associated directly from the columns for now */
+	tableRails += "\n";
 	return tableRails;
 }
 

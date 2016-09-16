@@ -357,8 +357,23 @@ SQL.Row.prototype.toXML = function() {
 
 SQL.Row.prototype.toRails = function() {
 	var rowRails = " ";
-	var dataTypeRails = this.getDataType().getAttribute("sql");
-	rowRails += this.getTitle().replace(/"/g, "") + ":" + dataTypeRails;
+	var dt = this.getDataType().getAttribute("sql");
+	if (dt == "TINYINT" || dt == "bit" || dt == "SMALLINT" || dt == "YEAR" || dt == "MEDIUMINT" || dt == "INT"){
+		dt = "integer";
+	}
+	if (dt == "DECIMAL" || dt == "DOUBLE"){
+		dt = "float";
+	}
+	if (dt == "CHAR" || dt == "VARCHAR" || dt == "VARBINARY"){
+		dt = "string";
+	}
+	if (dt == "MEDIUMTEXT" || dt == "BLOB" || dt == "ENUM" || dt == "SET"){
+		dt = "text";
+	} 
+	rowRails += this.getTitle().replace(/"/g, "") + ":" + dt.toLowerCase();
+	if (this.getTitle() == "id"){
+		return "";
+	}
 	return rowRails;
 }
 

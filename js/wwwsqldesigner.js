@@ -281,14 +281,14 @@ SQL.Designer.prototype.toRails = function() {
 	/* stringify data types */
 	/* what does this serializer do?  is it necessary? */
 
-	if (window.XMLSerializer) {
-		var s = new XMLSerializer();
-		rails += s.serializeToString(window.DATATYPES);
-	} else if (window.DATATYPES.xml) {
-		rails += window.DATATYPES.xml;
-	} else {
-		alert(_("errorxml")+': '+e.message);
-	}
+	// if (window.XMLSerializer) {
+	// 	var s = new XMLSerializer();
+	// 	rails += s.serializeToString(window.DATATYPES);
+	// } else if (window.DATATYPES.xml) {
+	// 	rails += window.DATATYPES.xml;
+	// } else {
+	// 	alert(_("errorxml")+': '+e.message);
+	// }
 
 	/* here is where the actual work is done */
 	for (var i=0;i<this.tables.length;i++) {
